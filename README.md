@@ -20,7 +20,7 @@
 #### app/build.gradle-->dependencies{}
     implementation(project(':AndroidMuqing'))
 
-### 引用 api
+### 引用(api)
     api 'androidx.appcompat:appcompat:1.7.0'
     api('com.google.android.material:material:1.12.0')
     api 'com.squareup.okhttp3:okhttp:4.9.3'
@@ -59,3 +59,4 @@
 - `BottomSheetDialog`  
   → 继承自 `com.google.android.material.bottomsheet.BottomSheetDialog`，提供了更加灵活和优化的底部弹窗，实现了更好的交互体验，支持自定义内容和弹出动画。
 ---
+
