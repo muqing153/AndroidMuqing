@@ -16,7 +16,7 @@
 ### 🧰 模块使用
 #### settings.gradle
     include(':AndroidMuqing')
-    project(':AndroidMuqing').projectDir = new File('../AndroidMuqing')
+    project(':AndroidMuqing').projectDir = new File('../AndroidMuqing/library')
 #### app/build.gradle-->dependencies{}
     implementation(project(':AndroidMuqing'))
 
