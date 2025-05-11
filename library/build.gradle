@@ -1,0 +1,69 @@
+plugins {
+    id 'com.android.library'
+    id 'maven-publish'
+}
+
+android {
+    compileSdk 35
+
+    namespace 'com.muqing' // 替换为你的模块包名
+
+    defaultConfig {
+        minSdk 24
+        targetSdk 35
+        versionCode 1
+        versionName "1.0.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    buildFeatures {
+        viewBinding true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    publishing {
+        multipleVariants {
+            allVariants()
+            withJavadocJar()
+        }
+    }
+}
+
+publishing {
+    publications {
+        release(MavenPublication) {
+            groupId = 'io.muqing'
+            artifactId = 'android-sdk'
+            version = '1.0.0'
+        }
+    }
+}
+
+dependencies {
+    //noinspection UseTomlInstead
+//    api('com.google.android.material:material:1.13.0-alpha11')
+    api 'androidx.appcompat:appcompat:1.7.0'
+    api('com.google.android.material:material:1.12.0')
+    api 'com.squareup.okhttp3:okhttp:4.9.3'
+    api('com.github.bumptech.glide:glide:4.16.0')
+}
+
+//
+//task exportJar(type: Copy) {
+//    from('build/intermediates/aar_main_jar/release/') // 或 debug，取决于你的构建类型
+//    include 'classes.jar'
+//    into 'build/outputs/jar/'
+//    rename('classes.jar', 'your-library-name.jar')
+//}
+//
+//task deleteOldJar(type: Delete) {
+//    delete 'build/outputs/jar/your-library-name.jar'
+//}
+//exportJar.dependsOn(deleteOldJar, build)
