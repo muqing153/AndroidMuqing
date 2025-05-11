@@ -4,12 +4,12 @@ plugins {
 }
 
 android {
-    compileSdkVersion 35  // 根据你项目的版本调整
+    compileSdk 34  // 根据你项目的版本调整
     namespace 'com.muqing' // 替换为你的模块包名
 
     defaultConfig {
-        minSdkVersion 24
-        targetSdkVersion 35
+        minSdk 21
+        targetSdk 34  // 建议一起升级
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }

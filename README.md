@@ -1,4 +1,6 @@
 # AndroidMuqing
+[![](https://jitpack.io/v/muqing153/AndroidMuqing.svg)](https://jitpack.io/#muqing153/AndroidMuqing)
+
 这是一个 Android 快速项目模块，旨在简化常见的开发任务，提供工具类、基础类封装以及 UI 组件，帮助开发者提高开发效率。
 
 ---
@@ -19,6 +21,12 @@
     project(':AndroidMuqing').projectDir = new File('../AndroidMuqing/library')
 #### app/build.gradle-->dependencies{}
     implementation(project(':AndroidMuqing'))
+#### jitpack.io
+    maven { url 'https://jitpack.io' }
+	dependencies {
+	        implementation 'com.github.muqing153:AndroidMuqing:Tag'
+	}
+---
 
 ### 引用(api)
     api 'androidx.appcompat:appcompat:1.7.0'
@@ -58,5 +66,3 @@
 #### 📌 优化底部弹窗
 - `BottomSheetDialog`  
   → 继承自 `com.google.android.material.bottomsheet.BottomSheetDialog`，提供了更加灵活和优化的底部弹窗，实现了更好的交互体验，支持自定义内容和弹出动画。
----
-

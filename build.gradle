@@ -4,13 +4,6 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.0.2'
-    }
-}
-
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
+        classpath 'com.android.tools.build:gradle:8.2.0'  // 推荐至少使用 8.1+
     }
 }
