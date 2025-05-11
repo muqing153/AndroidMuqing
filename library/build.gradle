@@ -27,6 +27,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    publishing {
+        singleVariant("release")
+    }
 }
 
 
@@ -51,15 +54,3 @@ publishing {
         }
     }
 }
-//
-//task exportJar(type: Copy) {
-//    from('build/intermediates/aar_main_jar/release/') // 或 debug，取决于你的构建类型
-//    include 'classes.jar'
-//    into 'build/outputs/jar/'
-//    rename('classes.jar', 'your-library-name.jar')
-//}
-//
-//task deleteOldJar(type: Delete) {
-//    delete 'build/outputs/jar/your-library-name.jar'
-//}
-//exportJar.dependsOn(deleteOldJar, build)
