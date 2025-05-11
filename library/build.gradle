@@ -42,6 +42,7 @@ publishing {
             groupId = 'io.muqing'
             artifactId = 'android-sdk'
             version = '1.0.0'
+            from components.release
         }
     }
 }
