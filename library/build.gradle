@@ -11,9 +11,8 @@ android {
     defaultConfig {
         minSdk 24
         targetSdk 35
-        versionCode 1
-        versionName "1.0.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -28,27 +27,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    publishing {
-        multipleVariants {
-            allVariants()
-            withJavadocJar()
-        }
-    }
 }
 
-publishing {
-    publications {
-        release(MavenPublication) {
-            groupId = 'com.github.muqing153'
-            artifactId = 'androidmuqing'
-            version = '1.0.0'
-            from components.release
-        }
-    }
-}
 
 dependencies {
-    //noinspection UseTomlInstead
+    //noinspection   UseTomlInstead
 //    api('com.google.android.material:material:1.13.0-alpha11')
     api 'androidx.appcompat:appcompat:1.7.0'
     api('com.google.android.material:material:1.12.0')
@@ -56,6 +39,18 @@ dependencies {
     api('com.github.bumptech.glide:glide:4.16.0')
 }
 
+publishing {
+    publications {
+        release(MavenPublication) {
+            groupId = 'com.muqing'
+            artifactId = 'library'
+            version = '1.0.0'
+            afterEvaluate {
+                from components.release
+            }
+        }
+    }
+}
 //
 //task exportJar(type: Copy) {
 //    from('build/intermediates/aar_main_jar/release/') // 或 debug，取决于你的构建类型
