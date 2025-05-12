@@ -22,60 +22,24 @@ import java.util.Stack;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+/** @noinspection unused */
 public class wj {
-    //    File internalStorageDir = getApplicationContext().getFilesDir();
-
+    public static String data;//程序Android/data/com.muqing/files/路径
+    /**
+     * 写入文件 路径 文件名 内容
+     */
     public static boolean xrwb(String fileurl, String name, String text) {
-
-        if (text == null) {
-            text = "";
-        }
-        File file = new File(fileurl, name);
-//如果文件不存在，创建文件
-        try {
-            File parentFile = file.getParentFile();
-            if (!parentFile.isDirectory()) {
-                parentFile.mkdirs();
-            }
-            if (!file.exists())
-                file.createNewFile();
-//创建FileOutputStream对象，写入内容
-            FileOutputStream fos = new FileOutputStream(file);
-//向文件中写入内容
-            fos.write(text.getBytes());
-            fos.close();
-            return true;
-        } catch (Exception e) {
-            gj.sc("xrwb: " + e.getMessage());
-
-        }
-        return false;
+        return xrwb(new File(fileurl, name), text);
     }
-
+    /**
+     * 写入文件 完整路径+文件名 内容
+     */
     public static boolean xrwb(String filename, String text) {
-        if (text == null) {
-            text = "";
-        }
-        File file = new File(filename);
-//如果文件不存在，创建文件
-        try {
-            File parentFile = file.getParentFile();
-            if (!parentFile.isDirectory()) {
-                parentFile.mkdirs();
-            }
-            if (!file.exists())
-                file.createNewFile();
-//创建FileOutputStream对象，写入内容
-            FileOutputStream fos = new FileOutputStream(file);
-//向文件中写入内容
-            fos.write(text.getBytes());
-            fos.close();
-            return true;
-        } catch (Exception e) {
-            gj.sc("xrwb: " + e.getMessage());
-        }
-        return false;
+        return xrwb(new File(filename), text);
     }
+    /**
+     * 完整File + 内容
+     */
     public static boolean xrwb(File file, String text) {
         if (text == null) {
             text = "";
@@ -83,11 +47,18 @@ public class wj {
 //如果文件不存在，创建文件
         try {
             File parentFile = file.getParentFile();
-            if (!parentFile.isDirectory()) {
-                parentFile.mkdirs();
+            if (parentFile != null && !parentFile.isDirectory()) {
+                boolean mkdirs = parentFile.mkdirs();
+                if (!mkdirs) {
+                    throw new RuntimeException("创建文件夹失败");
+                }
             }
-            if (!file.exists())
-                file.createNewFile();
+            if (!file.exists()){
+                boolean newFile = file.createNewFile();
+                if (!newFile) {
+                    throw new RuntimeException("创建文件失败");
+                }
+            }
 //创建FileOutputStream对象，写入内容
             FileOutputStream fos = new FileOutputStream(file);
 //向文件中写入内容
@@ -95,21 +66,21 @@ public class wj {
             fos.close();
             return true;
         } catch (Exception e) {
-            gj.sc("xrwb: " + e.getMessage());
+            gj.sc("写入文本异常: " + e.getMessage());
         }
         return false;
     }
 
-    public static String data;
-
-    public static String data(Context context) {
-//        return context.getApplicationContext().getFilesDir().toString();
-        return Objects.requireNonNull(context.getExternalFilesDir(null)).toString();
-    }
 
     /**
+     * 获取Android/data/com.muqing/files/路径
+     */
+    public static String data(Context context) {
+//        return context.getApplicationContext().getFilesDir().toString();
+        return data = Objects.requireNonNull(context.getExternalFilesDir(null)).toString();
+    }
+    /**
      * 删除文件夹
-     * @param folder
      */
     public static void sc(File folder) {
         if (folder != null && folder.exists()) {
@@ -122,39 +93,28 @@ public class wj {
                         sc(file);
                     } else {
                         // 删除文件
-                        file.delete();
+                        boolean delete = file.delete();
+                        if (!delete) {
+                            gj.sc("删除文件失败");
+                        }
                     }
                 }
             }
             // 删除空文件夹
-            folder.delete();
+            boolean delete = folder.delete();
+            if (!delete) {
+                gj.sc("删除文件夹失败");
+            }
         }
     }
     public static String dqwb(String fileurl, String name) {
-        try {
-            File file = new File(fileurl, name);
-            if (!file.exists()) {
-                return null;
-            }
-            FileInputStream fis = new FileInputStream(file);
-            BufferedReader br = new BufferedReader(new InputStreamReader(fis));
-            StringBuilder str = new StringBuilder();
-            String line;
-            while ((line = br.readLine()) != null) {
-                str.append(line);
-            }
-            br.close();
-            fis.close();
-            return str.toString();
-        } catch (Exception e) {
-            gj.sc("dqwb: " + e.getMessage());
-        }
-        return null;
+        return dqwb(new File(fileurl, name));
     }
-
     public static String dqwb(String filename) {
+        return dqwb(new File(filename));
+    }
+    public static String dqwb(File file) {
         try {
-            File file = new File(filename);
             if (!file.exists()) {
                 return null;
             }
@@ -173,11 +133,9 @@ public class wj {
         }
         return null;
     }
-
 
     public static class SaveBitMap {
         public String FileName = String.valueOf(System.currentTimeMillis());
-
         public SaveBitMap(Context context, Bitmap bitmap) {
             // 判断 Android 版本
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -188,32 +146,30 @@ public class wj {
                 saveImageApi28AndBelow(context, bitmap);
             }
         }
-
         private void saveImageApi29AndAbove(Context context, Bitmap bitmap) {
             ContentValues contentValues = new ContentValues();
             contentValues.put(MediaStore.Images.Media.DISPLAY_NAME, "my_image.jpg"); // 设置图片的文件名
             contentValues.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg"); // 设置图片类型
             contentValues.put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/" + FileName); // 设置保存的文件夹（相册）
-
             // 获取系统图片内容提供者的 Uri
             Uri imageUri = context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
-
-            try (OutputStream outputStream = context.getContentResolver().openOutputStream(imageUri)) {
-                if (outputStream != null) {
-                    // 将 Bitmap 压缩成 JPEG 格式并保存
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
-                    Toast.makeText(context, "图片保存成功", Toast.LENGTH_SHORT).show();
+            if (imageUri != null) {
+                try (OutputStream outputStream = context.getContentResolver().openOutputStream(imageUri)) {
+                    if (outputStream != null) {
+                        // 将 Bitmap 压缩成 JPEG 格式并保存
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+                        Toast.makeText(context, "图片保存成功", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (IOException e) {
+                    gj.sc("保存图片异常: " + e.getMessage());
+                    Toast.makeText(context, "图片保存失败", Toast.LENGTH_SHORT).show();
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
-                Toast.makeText(context, "图片保存失败", Toast.LENGTH_SHORT).show();
             }
         }
-
         private void saveImageApi28AndBelow(Context context, Bitmap bitmap) {
             File directory = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), FileName);
             if (!directory.exists()) {
-                directory.mkdirs();
+                boolean mkdirs = directory.mkdirs();
             }
 
             File file = new File(directory, "my_image.jpg");
@@ -223,12 +179,11 @@ public class wj {
                 MediaScannerConnection.scanFile(context, new String[]{file.getAbsolutePath()}, null, null);
                 Toast.makeText(context, "图片保存成功", Toast.LENGTH_SHORT).show();
             } catch (IOException e) {
-                e.printStackTrace();
+                gj.sc("保存图片异常: " + e.getMessage());
                 Toast.makeText(context, "图片保存失败", Toast.LENGTH_SHORT).show();
             }
         }
     }
-
 
     public static void zipFiles(File fileToZip, ZipOutputStream zos) throws IOException {
         if (fileToZip == null || !fileToZip.exists()) return;

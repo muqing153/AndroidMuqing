@@ -7,7 +7,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.FutureTarget;
 
 import okhttp3.FormBody;
-import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -28,7 +27,7 @@ public class wl {
                 return response.body().string();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            gj.sc("hq: " + e.getMessage());
         }
         return null;
     }
@@ -54,7 +53,7 @@ public class wl {
             for (Object[] b : a) {
                 aa.append(b[0]).append(":").append(b[1]).append("\n");
             }
-            e.printStackTrace();
+            gj.sc("post: " + e.getMessage() + "\n" + aa);
         }
         return null;
     }

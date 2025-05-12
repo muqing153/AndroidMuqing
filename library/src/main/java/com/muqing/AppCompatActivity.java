@@ -1,6 +1,5 @@
 package com.muqing;
 
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -12,6 +11,8 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.viewbinding.ViewBinding;
 
 import com.google.android.material.appbar.MaterialToolbar;
+
+import java.util.Objects;
 
 public abstract class AppCompatActivity<ViewBindingType extends ViewBinding> extends androidx.appcompat.app.AppCompatActivity {
 
@@ -41,7 +42,7 @@ public abstract class AppCompatActivity<ViewBindingType extends ViewBinding> ext
             }
         });
     }
-
+//    public static void
     public void setOnApplyWindowInsetsListener(Insets systemBars, View v) {
         v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
     }
@@ -52,7 +53,7 @@ public abstract class AppCompatActivity<ViewBindingType extends ViewBinding> ext
 
     public void setBackToolsBar(MaterialToolbar toolbar) {
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(v -> finish());
     }
 

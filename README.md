@@ -82,9 +82,7 @@
   → 继承 `BottomSheetDragHandleView` 的可视化触摸组件，优化了触摸反馈和底部弹窗交互体验，支持拖动操作和动态内容展示。
 
 ---
-
 ### 📦 Dialog 组件
-
 #### 📌 Material 风格输入弹窗
 
 - `DialogEditText`  

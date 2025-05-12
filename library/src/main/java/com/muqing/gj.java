@@ -14,16 +14,22 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Collections;
 
+/**
+ * @noinspection unused
+ */
 public class gj {
     private static final String TAG = "打印";
     public static boolean Debug = true;
 
+    /**
+     * 打印
+     *
+     * @param objects
+     */
     public static void sc(Object objects) {
         if (Debug) {
             Log.i(TAG, "sc: " + objects);
@@ -41,6 +47,13 @@ public class gj {
         return dm.widthPixels > dm.heightPixels;
     }
 
+    /**
+     * 获取主题颜色
+     *
+     * @param context
+     * @param id
+     * @return
+     */
     public static int getThemeColor(Context context, int id) {
         TypedValue typedValue = new TypedValue();
         if (context.getTheme().resolveAttribute(id, typedValue, true)) {
@@ -56,6 +69,7 @@ public class gj {
     public static void llq(Context context, String str, Class<?> llq) {
         context.startActivity(new Intent(context, llq).putExtra("url", str));
     }
+
     /**
      * 打开系统默认浏览器
      */
@@ -65,11 +79,27 @@ public class gj {
         context.startActivity(intent);
     }
 
+    /**
+     * 分享文字
+     *
+     * @param context
+     * @param str
+     */
     public static void fx(Context context, String str) {
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
         shareIntent.putExtra(Intent.EXTRA_TEXT, str);
         context.startActivity(shareIntent);
+    }
+
+    /**
+     * 提示文本
+     *
+     * @param a
+     * @param b
+     */
+    public static void ts(Context a, String b) {
+        Toast.makeText(a, b, Toast.LENGTH_SHORT).show();
     }
 
 
@@ -85,10 +115,6 @@ public class gj {
         //将ClipData数据复制到剪贴板：
         systemService.setPrimaryClip(mClipData);
         gj.ts(context, "复制成功");
-    }
-
-    public static void ts(Context a, String b) {
-        Toast.makeText(a, b, Toast.LENGTH_SHORT).show();
     }
 
     public static boolean isWiFiConnected() {
@@ -108,6 +134,12 @@ public class gj {
         return false;  // 默认为流量网络
     }
 
+
+    /**
+     * 显示键盘
+     *
+     * @param editText
+     */
     public static void tcjp(EditText editText) {
         editText.requestFocus();//获取焦点
         InputMethodManager imm = (InputMethodManager)
@@ -117,6 +149,11 @@ public class gj {
         imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
     }
 
+    /**
+     * 隐藏键盘
+     *
+     * @param editText
+     */
     public static void ycjp(EditText editText) {
         InputMethodManager imm = (InputMethodManager)
                 editText.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -125,9 +162,12 @@ public class gj {
                     InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
-
-    public static int getbackgroundColor(AppCompatActivity appCompatActivity) {
-        TypedArray array = appCompatActivity.getTheme().obtainStyledAttributes(new int[]{
+    /**
+     * 获取背景色
+     * @return
+     */
+    public static int getbackgroundColor(Context context) {
+        TypedArray array = context.getTheme().obtainStyledAttributes(new int[]{
                 android.R.attr.colorBackground
 //                android.R.attr.textColorPrimary,
         });
