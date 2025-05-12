@@ -6,6 +6,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
+import android.net.Uri;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
@@ -18,15 +19,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Collections;
-import java.util.Objects;
 
 public class gj {
     private static final String TAG = "打印";
+    public static boolean Debug = true;
 
     public static void sc(Object objects) {
-        Log.i(TAG, "sc: " + objects);
+        if (Debug) {
+            Log.i(TAG, "sc: " + objects);
+        }
     }
-
 
     /**
      * 判断是否是平板
@@ -48,8 +50,19 @@ public class gj {
         }
     }
 
+    /**
+     * 打开内置浏览器
+     */
     public static void llq(Context context, String str, Class<?> llq) {
         context.startActivity(new Intent(context, llq).putExtra("url", str));
+    }
+    /**
+     * 打开系统默认浏览器
+     */
+    public static void llq(Context context, String str) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(str));
+        context.startActivity(intent);
     }
 
     public static void fx(Context context, String str) {

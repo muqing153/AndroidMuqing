@@ -18,6 +18,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.Objects;
+import java.util.Stack;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 public class wj {
     //    File internalStorageDir = getApplicationContext().getFilesDir();
@@ -97,7 +100,6 @@ public class wj {
         return false;
     }
 
-    public static String $;
     public static String data;
 
     public static String data(Context context) {
@@ -105,7 +107,29 @@ public class wj {
         return Objects.requireNonNull(context.getExternalFilesDir(null)).toString();
     }
 
-
+    /**
+     * 删除文件夹
+     * @param folder
+     */
+    public static void sc(File folder) {
+        if (folder != null && folder.exists()) {
+            // 获取文件夹中的所有文件
+            File[] files = folder.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    // 如果是文件夹，递归调用
+                    if (file.isDirectory()) {
+                        sc(file);
+                    } else {
+                        // 删除文件
+                        file.delete();
+                    }
+                }
+            }
+            // 删除空文件夹
+            folder.delete();
+        }
+    }
     public static String dqwb(String fileurl, String name) {
         try {
             File file = new File(fileurl, name);
@@ -204,4 +228,51 @@ public class wj {
             }
         }
     }
+
+
+    public static void zipFiles(File fileToZip, ZipOutputStream zos) throws IOException {
+        if (fileToZip == null || !fileToZip.exists()) return;
+
+        String basePath = fileToZip.getAbsolutePath();
+        Stack<File> stack = new Stack<>();
+        stack.push(fileToZip);
+
+        while (!stack.isEmpty()) {
+            File current = stack.pop();
+            String entryName = current.getAbsolutePath().substring(basePath.length()).replace("\\", "/");
+
+            if (entryName.startsWith("/")) {
+                entryName = entryName.substring(1);
+            }
+
+            if (current.isDirectory()) {
+                File[] files = current.listFiles();
+                if (files != null && files.length == 0) {
+                    // 空文件夹需要单独加一个条目
+                    if (!entryName.endsWith("/")) {
+                        entryName += "/";
+                    }
+                    zos.putNextEntry(new ZipEntry(entryName));
+                    zos.closeEntry();
+                } else {
+                    if (files != null) {
+                        for (int i = files.length - 1; i >= 0; i--) {
+                            stack.push(files[i]);
+                        }
+                    }
+                }
+            } else {
+                try (FileInputStream fis = new FileInputStream(current)) {
+                    zos.putNextEntry(new ZipEntry(entryName));
+                    byte[] buffer = new byte[4096];
+                    int length;
+                    while ((length = fis.read(buffer)) != -1) {
+                        zos.write(buffer, 0, length);
+                    }
+                    zos.closeEntry();
+                }
+            }
+        }
+    }
+
 }
