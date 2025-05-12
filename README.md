@@ -95,3 +95,12 @@
 - `BottomSheetDialog`  
   → 继承自 `com.google.android.material.bottomsheet.BottomSheetDialog`
   ，提供了更加灵活和优化的底部弹窗，实现了更好的交互体验，支持自定义内容和弹出动画。
+
+
+
+##### 创建本地 tag 推送 tag 到 GitHub
+    git tag 1.0.1
+    git push origin 1.0.1
+##### 删除远程 tag （可选）删除本地 tag
+    git push origin :refs/tags/1.0.1
+    git tag -d v1.0.1
