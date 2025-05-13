@@ -30,17 +30,15 @@ public class SettingSwitch extends LinearLayout {
     }
 
 
-    ViewSeetingSwitchtBinding binding;
+    private ViewSeetingSwitchtBinding binding;
 
     private void Init(Context context, AttributeSet attrs) {
         View inflate = LayoutInflater.from(context).inflate(R.layout.view_seeting_switcht, this);
         binding = ViewSeetingSwitchtBinding.bind(inflate);
-//        android:clickable="true"
-//        android:focusable="true"
         setClickable(true);
         setFocusable(true);
         if (attrs != null) {
-            @SuppressLint("Recycle") TypedArray typedArray =
+            @SuppressLint({"Recycle", "CustomViewStyleable"}) TypedArray typedArray =
                     context.obtainStyledAttributes(attrs, R.styleable.SettingTextView);
             String title = typedArray.getString(R.styleable.SettingTextView_title);
             String message = typedArray.getString(R.styleable.SettingTextView_message);
@@ -48,10 +46,11 @@ public class SettingSwitch extends LinearLayout {
             binding.MaterialSwitch.setEnabled(enable);
             binding.title.setEnabled(enable);
             binding.message.setEnabled(enable);
+            if (enable) {
+                binding.getRoot().setOnClickListener(view -> binding.MaterialSwitch.setChecked(!binding.MaterialSwitch.isChecked()));
+            }
             setTitle(title);
             setMessage(message);
-
-            binding.getRoot().setOnClickListener(view -> binding.MaterialSwitch.setChecked(!binding.MaterialSwitch.isChecked()));
         }
 
     }
