@@ -1,7 +1,10 @@
 package com.muqing;
 
+import android.content.pm.ActivityInfo;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.OnBackPressedCallback;
@@ -60,6 +63,4 @@ public abstract class AppCompatActivity<ViewBindingType extends ViewBinding> ext
     public void BackPressed() {
         finish();
     }
-
-
 }

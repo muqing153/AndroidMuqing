@@ -11,11 +11,12 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.LinearLayoutCompat;
 
 import com.muqing.R;
 import com.muqing.databinding.ViewSeetingTextBinding;
 
-public class SettingTextView extends LinearLayout {
+public class SettingTextView extends LinearLayoutCompat {
     public SettingTextView(Context context) {
         super(context);
         Init(context, null);
@@ -28,6 +29,7 @@ public class SettingTextView extends LinearLayout {
 
     public SettingTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        Init(context, attrs);
     }
 
 

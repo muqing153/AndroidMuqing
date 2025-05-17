@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewbinding.ViewBinding;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BaseAdapter<ViewBindingType extends ViewBinding,DataType> extends RecyclerView.Adapter<BaseAdapter.ViewHolder<ViewBindingType>>  {
@@ -18,6 +19,12 @@ public abstract class BaseAdapter<ViewBindingType extends ViewBinding,DataType> 
     public BaseAdapter(Context context, List<DataType> dataList) {
         this.context = context;
         this.dataList = dataList;
+        this.layoutInflater = LayoutInflater.from(context);
+    }
+
+    public BaseAdapter(Context context) {
+        this.context = context;
+        this.dataList = new ArrayList<>();
         this.layoutInflater = LayoutInflater.from(context);
     }
 

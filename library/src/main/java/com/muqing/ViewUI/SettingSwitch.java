@@ -10,11 +10,13 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 
+import androidx.appcompat.widget.LinearLayoutCompat;
+
 import com.muqing.R;
 import com.muqing.databinding.ViewSeetingSwitchtBinding;
 import com.muqing.databinding.ViewSeetingTextBinding;
 
-public class SettingSwitch extends LinearLayout {
+public class SettingSwitch extends LinearLayoutCompat {
     public SettingSwitch(Context context) {
         super(context);
         Init(context, null);
@@ -42,17 +44,23 @@ public class SettingSwitch extends LinearLayout {
                     context.obtainStyledAttributes(attrs, R.styleable.SettingTextView);
             String title = typedArray.getString(R.styleable.SettingTextView_title);
             String message = typedArray.getString(R.styleable.SettingTextView_message);
-            boolean enable = typedArray.getBoolean(R.styleable.SettingTextView_enabled, true);
-            binding.MaterialSwitch.setEnabled(enable);
-            binding.title.setEnabled(enable);
-            binding.message.setEnabled(enable);
-            if (enable) {
-                binding.getRoot().setOnClickListener(view -> binding.MaterialSwitch.setChecked(!binding.MaterialSwitch.isChecked()));
-            }
+            boolean enabled = typedArray.getBoolean(R.styleable.SettingTextView_enabled, true);
+            setEnabled(enabled);
             setTitle(title);
             setMessage(message);
         }
 
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        binding.MaterialSwitch.setEnabled(enabled);
+        binding.title.setEnabled(enabled);
+        binding.message.setEnabled(enabled);
+        if (enabled) {
+            binding.getRoot().setOnClickListener(view -> binding.MaterialSwitch.setChecked(!binding.MaterialSwitch.isChecked()));
+        }
     }
 
     public void setTitle(String title) {
