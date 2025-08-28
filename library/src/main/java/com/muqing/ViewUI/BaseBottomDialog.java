@@ -1,39 +1,24 @@
 package com.muqing.ViewUI;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.viewbinding.ViewBinding;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
-public abstract class BaseDialog<ViewBindingType extends ViewBinding> extends MaterialAlertDialogBuilder {
+public abstract class BaseBottomDialog<ViewBindingType extends ViewBinding> extends BottomSheetDialog {
 
 
     public ViewBindingType binding;
-    public AlertDialog dialog;
-
-    public BaseDialog(Context context) {
+    public BaseBottomDialog(Context context) {
         super(context);
         binding = getViewBindingObject(LayoutInflater.from(context), null, 0);
-        setView(binding.getRoot());
+        setContentView(binding.getRoot());
     }
 
     protected abstract void initView();
-    public void dismiss() {
-        dialog.dismiss();
-    }
-
-    @Override
-    public AlertDialog show() {
-        dialog = super.show();
-        return dialog;
-    }
-
     /**
      * 获取 ViewBinding 实例（由子类实现）
      */
