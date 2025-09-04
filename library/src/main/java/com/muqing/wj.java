@@ -17,6 +17,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Stack;
 import java.util.zip.ZipEntry;
@@ -184,7 +186,6 @@ public class wj {
             }
         }
     }
-
     public static void zipFiles(File fileToZip, ZipOutputStream zos) throws IOException {
         if (fileToZip == null || !fileToZip.exists()) return;
 
@@ -229,5 +230,23 @@ public class wj {
             }
         }
     }
-
+    /**
+     * 获取文件夹中所有文件
+     */
+    public static List<File> getAllFiles(File folder) {
+        List<File> files = new ArrayList<>();
+        if (folder.isDirectory()) {
+            File[] fileList = folder.listFiles();
+            if (fileList != null) {
+                for (File file : fileList) {
+                    if (file.isFile()) {
+                        files.add(file);
+                    } else if (file.isDirectory()) {
+                        files.addAll(getAllFiles(file));
+                    }
+                }
+            }
+        }
+        return files;
+    }
 }
