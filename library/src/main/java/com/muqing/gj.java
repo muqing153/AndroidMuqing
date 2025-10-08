@@ -164,6 +164,7 @@ public class gj {
 
     /**
      * 获取背景色
+     *
      * @return
      */
     public static int getbackgroundColor(Context context) {
@@ -194,5 +195,12 @@ public class gj {
     public static int dp2px(Context context, float dpValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
+    }
+
+    public static void error(Object e) {
+        if (e == null) {
+            e = "null";
+        }
+        Log.e("error", e.toString());
     }
 }
